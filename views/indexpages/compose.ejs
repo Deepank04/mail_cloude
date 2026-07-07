@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="../stylesheets/indexpages/compose.css">
+
+</head>
+<body>
+  
+
+<div class="compose-popup" id="composePopup">
+    <div class="compose-header">
+        <span>New Message</span>
+        <button id="closeCompose">&times;</button>
+    </div>
+
+    <form action="/sendmail" method="POST">
+        <input type="email" name="to" placeholder="To" required>
+
+        <input type="text" name="subject" placeholder="Subject">
+
+        <textarea
+            name="message"
+            placeholder="Write your message..."
+            required></textarea>
+          
+
+        <button type="submit">Send</button>
+
+    </form>
+</div>
+
+
+</body>
+</html>

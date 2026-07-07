@@ -1,0 +1,89 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#f6f8fc;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.account-card{
+    width:360px;
+    background:#fff;
+    border-radius:28px;
+    box-shadow:0 6px 20px rgba(0,0,0,.18);
+    padding:30px 25px;
+    text-align:center;
+}
+
+.email{
+    font-size:15px;
+    color:#5f6368;
+    margin-bottom:20px;
+}
+
+.profile{
+    margin-bottom:18px;
+}
+
+.profile img{
+    width:90px;
+    height:90px;
+    border-radius:50%;
+    object-fit:cover;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.profile img:hover{
+    transform:scale(1.05);
+}
+
+.greeting{
+    font-size:26px;
+    color:#202124;
+    margin-bottom:15px;
+}
+
+.manage-btn{
+    display:inline-block;
+    text-decoration:none;
+    color:#1a73e8;
+    border:1px solid #dadce0;
+    border-radius:25px;
+    padding:10px 22px;
+    font-size:14px;
+    font-weight:500;
+    margin-bottom:25px;
+    transition:.2s;
+}
+
+.manage-btn:hover{
+    background:#f1f3f4;
+}
+
+.accounts{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.accounts a{
+    text-decoration:none;
+    color:#202124;
+    background:#f8f9fa;
+    padding:12px 18px;
+    border-radius:15px;
+    transition:.2s;
+    font-size:15px;
+}
+
+.accounts a:hover{
+    background:#e8eaed;
+}

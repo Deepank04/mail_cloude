@@ -1,0 +1,37 @@
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+<style>
+#toast-container.toast-top-center {
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+</style>
+
+<script>
+toastr.options = {
+    closeButton: false,
+    progressBar: true,
+    positionClass: "toast-top-center",
+    timeOut: "2000",
+    extendedTimeOut: "500",
+    preventDuplicates: true
+};
+</script>
+
+<% if (success.length > 0) { %>
+<script>
+    toastr.success("<%= success[0] %>");
+</script>
+<% } %>
+
+<% if (error.length > 0) { %>
+<script>
+    toastr.error("<%= error[0] %>");
+</script>
+<% } %>

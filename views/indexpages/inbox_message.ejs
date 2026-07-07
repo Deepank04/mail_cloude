@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mail</title>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial, Helvetica, sans-serif;
+    }
+
+    body{
+      background:#f6f8fc;
+      padding:40px;
+    }
+
+    .mail-container{
+      max-width:900px;
+      margin:auto;
+      background:#fff;
+      border:1px solid #dadce0;
+      border-radius:14px;
+      overflow:hidden;
+      box-shadow:0 2px 8px rgba(0,0,0,.08);
+    }
+
+    .mail-header{
+      padding:22px 30px;
+      border-bottom:1px solid #e5e5e5;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+    }
+
+    .mail-header h1{
+      font-size:28px;
+      color:#202124;
+      font-weight:500;
+    }
+
+    .mail-info{
+      display:flex;
+      align-items:flex-start;
+      gap:18px;
+      padding:25px 30px;
+      border-bottom:1px solid #ececec;
+    }
+
+    .mail-info img{
+      width:55px;
+      height:55px;
+      border-radius:50%;
+      object-fit:cover;
+      border:1px solid #ddd;
+    }
+
+    .details{
+      flex:1;
+    }
+
+    .details h3{
+      font-size:16px;
+      color:#202124;
+      margin-bottom:8px;
+      font-weight:500;
+    }
+
+    .details span{
+      color:#5f6368;
+      font-weight:600;
+      margin-right:6px;
+          font-size: 14px;
+    font-weight: 600;
+    color: #202124;
+    }
+
+    .message-box{
+      padding:35px 30px;
+      min-height:350px;
+      line-height:1.8;
+      font-size:17px;
+      color:#202124;
+      white-space:pre-wrap;
+    }
+
+    .footer{
+      padding:18px 30px;
+      border-top:1px solid #ececec;
+      background:#fafafa;
+      color:#5f6368;
+      font-size:14px;
+    }
+
+    .subject-box{
+    font-size: 14px;
+    font-weight: 600;
+    color: #202124;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-left: 20px;
+    flex-shrink: 0;
+}
+
+
+
+    
+
+  </style>
+
+</head>
+<body>
+
+<div class="mail-container">
+
+    <div class="mail-header">
+        <h1>Message</h1>
+    </div>
+
+
+
+    <!-- Sender & Receiver -->
+    <div class="mail-info">
+
+        <% if (mail.to.image) { %>
+
+        <img
+            class="profile-img"
+            src="data:<%= mail.from.imageType %>;base64,<%= mail.from.image %>"
+            alt="Profile Picture">
+
+        <% } else { %>
+
+        <div class="avatar-letter">
+            <%= mail.to.firstname.charAt(0).toUpperCase() %>
+        </div>
+
+        <% } %>
+
+        <div class="details">
+
+            <h3 class="from_name">
+                <span>From:</span>
+                [ <%= mail.from.firstname %> <%= mail.from.surname %> ]
+            </h3>
+
+            <h3 class="to_name">
+                <span>To:</span>
+                You : [ <%= mail.to.firstname %> <%= mail.to.surname %> ]
+            </h3>
+
+        </div>
+
+    </div>
+        <!-- Subject -->
+    <div class="subject-box">
+        <h2>Subject: [ <%= mail.subject %> ]</h2>
+    </div>
+
+    <!-- Message -->
+    <div class="message-box">
+        <%= mail.message %>
+    </div>
+
+    <div class="footer">
+        End of message
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mail</title>
+
+  
+    <link rel="stylesheet" href="../stylesheets/indexpages/index.css">
+</head>
+<body>
+
+
+<div class="container">
+
+    <!-- Sidebar -->
+
+    <div class="sidebar" id="sidebar">
+
+        <div class="logo">
+            <button id="toggle">&#9776;</button>
+            <span>Gmail</span>
+        </div>
+
+        <a href="#" id="composeBtn" class="compose">✚ Compose</a>
+       
+
+<div class="menu">
+
+    <a href="#" class="active">📥 Inbox</a>
+    <a href="/indexroute/starred">⭐ Starred</a>
+    <a href="#">😴 Snoozed</a>
+    <a href="/indexroute/send">📤 Sent</a>
+    <a href="#">📝 Drafts</a>
+    <a href="#">🛒 Purchases</a>
+
+    <div id="moreItems" class="hidden">
+        <a href="#">❗ Important</a>
+        <a href="#">📅 Scheduled</a>
+        <a href="#">📨 All Mail</a>
+        <a href="#">🚫 Spam</a>
+        <a href="/indexroute/sends">🗑 Trash</a>
+        <a href="#">⚙ Settings</a>
+        <a href="/userroute/logout">🚪 Logout</a>
+    </div>
+
+    <button id="moreBtn" class="more-btn">
+        ▼ More
+    </button>
+
+</div>
+
+    </div>
+
+    <!-- Main -->
+
+    <div class="main">
+
+        <!-- Header -->
+
+<div class="header">
+
+    <div class="header-left">
+
+        <div class="search-box" id="searchBox">
+            <input type="text" placeholder="Search in emails">
+        </div>
+
+    </div>
+
+<div class="top-actions">
+
+    <div class="action-icon">
+        <h2>❓</h2>
+    </div>
+
+    <div class="action-icon">
+        <h2>⚙️</h2>
+    </div>
+
+    <div>
+        <button class="upgrade-btn">Upgrade</button>
+    </div>
+
+    <div class="action-icon">
+        <h2>✨</h2>
+    </div>
+
+<div class="apps-container">
+
+    <div class="grid" id="gridBtn">
+        ◾ ◾ ◾<br>
+        ◾ ◾ ◾<br>
+        ◾ ◾ ◾
+    </div>
+
+    <div class="apps-popup" id="appsPopup">
+
+        <a href="#">📧<span>Mail</span></a>
+        <a href="#">📅<span>Calendar</span></a>
+        <a href="#">📁<span>Drive</span></a>
+        <a href="#">📷<span>Photos</span></a>
+        <a href="#">▶️<span>YouTube</span></a>
+        <a href="#">📝<span>Docs</span></a>
+        <a href="#">📊<span>Sheets</span></a>
+        <a href="#">🎞️<span>Slides</span></a>
+        <a href="#">💬<span>Chat</span></a>
+        <a href="#">👤 <span>Contacts</span></a>
+        <a href="#">✈️ <span>Travels</span></a>
+        <a href="#">🌐<span>Chrome</span></a>
+        <a href="#">📓<span>Notebook</span></a>
+        <a href="#">💳<span>Contacts</span></a>
+        
+
+    </div>
+
+</div>
+
+
+
+
+</div>
+
+    <div onclick="window.location='/indexroute/profilepic/<%= user.id %>'">
+
+        <% if (user.image) { %>
+
+        <img
+            class="profile-img"
+            src="data:<%= user.imageType %>;base64,<%= user.image %>"
+            alt="Profile Picture">
+
+        <% } else { %>
+
+        <div class="avatar-letter">
+            <%= user.firstname.charAt(0).toUpperCase() %>
+        </div>
+
+        <% } %>
+</div>
+
+    </div>
+
+      <!-- Categories -->
+
+
+
+        <!-- Mail List -->
+<div class="toolbar-space">
+
+    <div class="mail-toolbar" id="mailToolbar">
+        <a href="#">✉️<br>Archive</a>
+        <a href="/indexroute/trash" id="trashBtn">🗑<br>trash</a>
+        <a href="#">🚫<br>spam</a>
+        <a href="#">📥<br>read mesaage</a>
+        <a href="#">📁<br>move to</a>
+        <a href="#">⋮<br>menu</a>
+    </div>
+
+</div>
+ <!-- Mail List -->
+<% if (user.inbox.length === 0) { %>
+
+    <div class="empty">
+        No mails yet.
+    </div>
+
+<% } else { %>
+
+
+    <% user.inbox.forEach(function(mail) { %>
+
+<div class="mail-card"
+     onclick="window.location='/indexroute/inbox_messages/<%= mail._id %>'">
+
+    <div class="mail-left">
+        <input
+            type="checkbox"
+            class="mail-check"
+            data-id="<%= mail._id %>"
+        onclick="event.stopPropagation()">
+
+        <input
+            type="checkbox"
+            class="star-checkbox"
+            <%= mail.starred ? "checked" : "" %>
+            onclick="event.stopPropagation(); window.location='/indexroute/start/<%= mail._id %>'">
+    </div>
+
+            <div class="mail-info">
+                <span class="sender">
+                    <%= mail.from.firstname %> <%= mail.from.surname %>
+                </span>
+
+                <span class="subject">
+                    <%= mail.subject %>
+                </span>
+
+                <span class="preview">
+                    - <%= mail.message %>
+                </span>
+            </div>
+
+        </div>
+
+    <% }) %>
+
+<% } %>
+
+
+
+<div class="compose-popup" id="composePopup">
+    <div class="compose-header">
+        <span>New Message</span>
+        <button id="closeCompose">&times;</button>
+    </div>
+
+    <form action="/indexroute/compose/<%=user._id%>" method="POST">
+        <input type="email" name="to" placeholder="To" required>
+
+        <input type="text" name="subject" placeholder="Subject">
+
+        <textarea
+            name="message"
+            placeholder="Write your message..."
+            required></textarea>
+
+
+<div class="compose-footer">
+
+    <button type="submit" class="send-btn">
+        Send
+    </button>
+
+    <div class="compose-icons">
+        <button type="button">📎</button>
+        <button type="button">🔗</button>
+        <button type="button">😊</button>
+        <button type="button">☁️</button>
+        <button type="button">🖼️</button>
+    </div>
+
+</div>
+
+</div>
+    </form>
+</div>
+
+<script>
+const composeBtn = document.getElementById("composeBtn");
+const composePopup = document.getElementById("composePopup");
+const closeCompose = document.getElementById("closeCompose");
+
+// Open popup
+composeBtn.addEventListener("click", function(e) {
+    e.preventDefault();
+    composePopup.style.display = "flex";
+});
+
+// Close popup
+closeCompose.addEventListener("click", function() {
+    composePopup.style.display = "none";
+});
+
+// Close when clicking outside
+window.addEventListener("click", function(e) {
+    if (e.target === composePopup) {
+        composePopup.style.display = "none";
+    }
+});
+</script>
+
+<script>
+const moreBtn = document.getElementById("moreBtn");
+const moreItems = document.getElementById("moreItems");
+
+moreBtn.addEventListener("click", () => {
+
+    moreItems.classList.toggle("hidden");
+
+    if (moreItems.classList.contains("hidden")) {
+        moreBtn.innerHTML = "▼ More";
+    } else {
+        moreBtn.innerHTML = "▲ Less";
+    }
+
+});
+</script>
+
+
+<script>
+    // hidden toolbar open when click
+const toolbar = document.getElementById("mailToolbar");
+const checkboxes = document.querySelectorAll(".mail-check");
+
+checkboxes.forEach(box => {
+    box.addEventListener("change", () => {
+        const checked = document.querySelectorAll(".mail-check:checked");
+
+        if (checked.length > 0) {
+            toolbar.classList.add("show");
+        } else {
+            toolbar.classList.remove("show");
+        }
+    });
+});
+
+</script>
+
+<script>
+const selectedMails = [];
+
+document.querySelectorAll(".mail-check").forEach(box => {
+
+    box.addEventListener("change", function () {
+
+        const id = this.dataset.id;
+
+        if (this.checked) {
+
+            if (!selectedMails.includes(id)) {
+                selectedMails.push(id);
+            }
+
+        } else {
+
+            const index = selectedMails.indexOf(id);
+
+            if (index !== -1) {
+                selectedMails.splice(index, 1);
+            }
+
+        }
+
+        console.log(selectedMails);
+
+    });
+
+});
+
+
+const trashBtn = document.getElementById("trashBtn");
+
+trashBtn.addEventListener("click", async (e) => {
+    e.preventDefault();
+
+    if (selectedMails.length === 0) {
+        alert("Please select at least one mail.");
+        return;
+    }
+
+    const response = await fetch("/indexroute/trash", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            ids: selectedMails
+        })
+    });
+
+   
+        if (response.ok) {
+    window.location.href = "/indexroute/index";
+}
+    
+});
+
+
+</script>
+
+<script>
+const gridBtn = document.getElementById("gridBtn");
+const appsPopup = document.getElementById("appsPopup");
+
+gridBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    appsPopup.classList.toggle("show");
+});
+
+window.addEventListener("click", (e) => {
+    if (!appsPopup.contains(e.target) && e.target !== gridBtn) {
+        appsPopup.classList.remove("show");
+    }
+});
+</script>
+
+
+<%- include('../partial/toaster') %>
+</body>
+</html>

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Profile Picture</title>
+
+    <link rel="stylesheet" href="/stylesheets/profile/updateprofile.css">
+    <style>
+      *{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#f6f8fc;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+}
+
+.container{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.card{
+    width:430px;
+    background:#fff;
+    border-radius:20px;
+    padding:35px;
+    box-shadow:0 8px 25px rgba(0,0,0,.12);
+}
+
+.card h1{
+    text-align:center;
+    color:#202124;
+    margin-bottom:30px;
+    font-size:28px;
+}
+
+.current-image{
+    text-align:center;
+    margin-bottom:35px;
+}
+
+.current-image h3{
+    color:#5f6368;
+    margin-bottom:15px;
+    font-weight:500;
+}
+
+.current-image img{
+    width:140px;
+    height:140px;
+    border-radius:50%;
+    object-fit:cover;
+    border:4px solid #e8eaed;
+}
+
+.upload-section{
+    margin-bottom:30px;
+}
+
+.upload-section h3{
+    color:#5f6368;
+    margin-bottom:12px;
+    font-weight:500;
+}
+
+.upload-section input[type="file"]{
+    width:100%;
+    padding:12px;
+    border:1px solid #dadce0;
+    border-radius:10px;
+    background:#fff;
+    cursor:pointer;
+}
+
+.upload-section input[type="file"]::file-selector-button{
+    padding:10px 16px;
+    margin-right:15px;
+    border:none;
+    border-radius:8px;
+    background:#1a73e8;
+    color:#fff;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.upload-section input[type="file"]::file-selector-button:hover{
+    background:#1558b0;
+}
+
+.avatar,
+.avatar-letter{
+    margin-left: 130px;
+    width: 60px;
+    height: 60px;
+    border-radius:50%;
+}
+
+
+.avatar-letter{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:#4285f4;
+    color:#fff;
+
+    font-size:20px;
+    font-weight:bold;
+}
+
+button{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:12px;
+    background:#1a73e8;
+    color:#fff;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+
+button:hover{
+    background:#1558b0;
+}
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="card">
+         
+        <h1>Update Profile Picture</h1>
+        
+        
+
+        <form action="/userroute/image/update/<%= user.id %>" method="POST" enctype="multipart/form-data">
+
+            <div class="current-image">
+
+                <h3 style="align-items: center"><%= user.firstname%> <%=user.surname %></h3>
+               
+
+        <% if (user.image) { %>
+
+        <img
+            class="profile-img"
+            src="data:<%= user.imageType %>;base64,<%= user.image %>"
+            alt="Profile Picture">
+
+        <% } else { %>
+
+        <div class="avatar-letter">
+            <%= user.firstname.charAt(0).toUpperCase() %>
+        </div>
+
+        <% } %>
+
+            </div>
+
+            <div class="upload-section">
+
+                <h3>Select New Picture</h3>
+
+                <input type="file" name="profile" required>
+
+            </div>
+
+            <button type="submit">
+                Upload Picture
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="../stylesheets/loginaccount/home.css">
+  
+  
+</head>
+<body>
+
+
+
+
+
+
+  <div class="container">
+
+    <div class="left-section">
+  <h3 class="logo">
+    <span class="blue">G</span>
+    <span class="red">o</span>
+    <span class="yellow">o</span>
+    <span class="blue">g</span>
+    <span class="green">l</span>
+    <span class="red">e</span>
+</h3>
+  <h3 class="heading">sign in</h3>
+  <p class="subtitle">with your Google Account.<a href="#">learn more</a></p>
+      </div>
+  <div>
+    <div class="right-section">
+      <form class="login-form" action="/userroute/logemail" method="post">
+      <input type="email" placeholder="Email or Phone" name="email">
+      <a href="" class="forget-link">fogets your email?</a>
+          <div class="button-group">
+      <a href="/userroute/name" class="create-account">create account</a>
+                <button class="next-btn" type="submit">
+                  Next
+        </button>
+    </div>
+      </form>
+    </div>
+
+
+  </div>
+   </div>
+
+
+
+   <%- include('../partial/toaster') %>
+</body>
+</html>

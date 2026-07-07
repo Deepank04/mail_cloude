@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sent Mail</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#f1f3f4;
+}
+
+.container{
+    width:95%;
+    max-width:1300px;
+    margin:30px auto;
+}
+
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.header h2{
+    color:#202124;
+    font-size:28px;
+}
+
+.total{
+    color:#5f6368;
+    font-size:15px;
+}
+
+.mail-box{
+    background:white;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:0 2px 12px rgba(0,0,0,.08);
+}
+
+.mail{
+    display:grid;
+    grid-template-columns:250px 1fr 180px 120px;
+    align-items:center;
+    padding:18px 25px;
+    border-bottom:1px solid #ececec;
+    transition:.2s;
+    cursor:pointer;
+}
+
+.mail:hover{
+    background:#f8f9fa;
+}
+
+.mail:last-child{
+    border-bottom:none;
+}
+
+.receiver{
+    font-weight:600;
+    color:#202124;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.subject{
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    color:#202124;
+}
+
+.preview{
+    color:#70757a;
+    font-size:14px;
+}
+
+.status{
+    text-align:center;
+}
+
+.sent{
+    display:inline-block;
+    padding:6px 14px;
+    border-radius:20px;
+    background:#e6f4ea;
+    color:#137333;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.date{
+    text-align:right;
+    color:#5f6368;
+    font-size:14px;
+}
+
+.empty{
+    padding:80px;
+    text-align:center;
+    color:#777;
+    font-size:20px;
+}
+
+@media(max-width:900px){
+
+.mail{
+    grid-template-columns:1fr;
+    gap:10px;
+}
+
+.date,
+.status{
+    text-align:left;
+}
+
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <h2>Sent Mail</h2>
+
+        <div class="total">
+            Total :
+            <%= sentMails.length %>
+        </div>
+    </div>
+
+    <div class="mail-box">
+
+    <% if(sentMails.length===0){ %>
+
+        <div class="empty">
+            No sent mails found.
+        </div>
+
+    <% } %>
+
+    <% sentMails.forEach(function(mail){ %>
+
+    <div class="mail" onclick="window.location='/indexroute/send_messages/<%= mail._id %>'">
+
+        <div class="receiver">
+            To :
+            <%= mail.to.firstname %> <%= mail.to.lastname %>
+        </div>
+
+        <div class="subject">
+            <strong><%= mail.subject %></strong>
+
+            <% if(mail.message){ %>
+
+            <span class="preview">
+                -
+                <%= mail.message.substring(0,80) %>...
+            </span>
+
+            <% } %>
+        </div>
+
+        <div class="status">
+            <span class="sent">
+                Sent
+            </span>
+        
+        </div>
+
+        <div class="date">
+            <%= new Date(mail.createdAt).toLocaleDateString() %>
+        </div>
+
+    </div>
+
+    <% }) %>
+
+    </div>
+
+</div>
+
+</body>
+</html>
