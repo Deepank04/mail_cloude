@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port=3000;
+
 const path = require('path');
 const {islogged} = require('./middleware/authorization');
 const dotenv = require('dotenv').config();
@@ -32,7 +32,7 @@ app.use(session({
     saveUninitialized: false,
 
        store: MongoStore.create({
-        mongoUrl: "mongodb://127.0.0.1:27017/mail-pro"
+        mongoUrl: process.env.MONGODB_URI
     }),
 
         cookie: {
@@ -63,6 +63,8 @@ app.use('/',homeroute);
 app.use('/userroute',userroute);
 app.use('/indexroute',indexroute);
 
-app.listen(port,(req,res)=>{
-  console.log(`server is running on port ${port}`);
-})
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
