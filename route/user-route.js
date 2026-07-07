@@ -115,7 +115,8 @@ req.session.flash = {
 
 req.session.save(err => {
     if (err) return res.send("Session error");
-    res.redirect("/indexroute/index");
+    req.flash("success","Your Account created successfully");
+    res.redirect("/login");
 });
 
 }
@@ -124,8 +125,6 @@ catch(err){
 }
   
 });
-
-
 
 
 route.post('/logemail',async (req,res)=>{
