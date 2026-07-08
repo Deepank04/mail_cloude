@@ -12,16 +12,12 @@ const mailmodel = require('../model/mail');
 route.use(cookieparser());
 
 
-
-
-
-
 route.get('/name',(req,res)=>{
   res.render("createAccount/name");
 });
 
 route.post("/name", (req, res) => {
- 
+ try{
    req.session.signup = {
     firstname: req.body.firstname,
     surname:req.body.surname,
@@ -32,17 +28,21 @@ route.post("/name", (req, res) => {
    };
 
     res.redirect("/userroute/dob");
+  }
+  catch(err){
+    console.error("Registration Error:", err);
+    return res.status(500).send(err.message);
+  }
 });
 
 route.get('/dob',(req,res)=>{
-  res.render("createAccount/dob");
+  res.render("createaccount/dob");
 })
 
 
 route.post("/dob", (req, res) => {
 
-   
-
+  try{
     const { day, month, year, gender } = req.body;
 
     
@@ -52,15 +52,20 @@ route.post("/dob", (req, res) => {
     req.session.signup.gender = gender;
 
     res.redirect("/userroute/email");
+  }
+  catch(err){
+    console.error("Registration Error:", err);
+    return res.status(500).send(err.message);
+  }
 });
 
 
 route.get('/email',(req,res)=>{
-  res.render("createAccount/email");
+  res.render("createaccount/email");
 });
 
 route.post("/email", async (req, res) => {
- 
+ try{
       if (!req.session.signup) {
         req.session.signup = {};
     }
@@ -78,15 +83,23 @@ route.post("/email", async (req, res) => {
     req.session.signup.email = req.body.email;
 
     res.redirect("/userroute/password");
+}
+catch(err){
+      console.error("Registration Error:", err);
+    return res.status(500).send(err.message);
+}
 });
 
 route.get('/password',(req,res)=>{
-  res.render("createAccount/password");
+  res.render("createaccount/password");
 })
 
 route.post("/password",async (req, res) => {
 
   try{
+        if (!req.session.signup) {
+            return res.redirect("/userroute/name");
+        }
     req.session.signup.password = req.body.password;
 
     const data = req.session.signup;
@@ -102,26 +115,15 @@ route.post("/password",async (req, res) => {
   gender:data.gender,
   email:data.email,
   password:hash,
-  })
+  });
 
-await new Promise(resolve => setTimeout(resolve, 2000));
-
-req.session.flash = {
-    type: "success",
-    message: "Register Successfully"
-};
-
-
-
-req.session.save(err => {
-    if (err) return res.send("Session error");
     req.flash("success","Your Account created successfully");
     res.redirect("/login");
-});
 
 }
-catch(err){
-  console.log(err);
+catch (err) {
+    console.error("Registration Error:", err);
+    return res.status(500).send(err.message);
 }
   
 });
