@@ -13,7 +13,7 @@ route.use(cookieparser());
 
 
 route.get('/name',(req,res)=>{
-  res.render("createAccount/name");
+  res.render("createaccount/name");
 });
 
 route.post("/name", (req, res) => {
